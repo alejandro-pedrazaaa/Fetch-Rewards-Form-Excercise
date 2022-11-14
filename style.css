@@ -27,7 +27,7 @@ section {
 }
 /**************************** Footer ****************************/
 footer {
-  background-image: url("https://www.fetchrewards.com/assets/images/banners/footer-image@2x.png");
+  background-image: url("./images/fetch-rewards-footer-image.png");
   background-position: center;
   background-size: cover;
   min-height: auto;
