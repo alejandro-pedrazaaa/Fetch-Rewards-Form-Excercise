@@ -84,66 +84,79 @@
     </nav>
     <!-- End Navbar -->
     <!-- ========================================================= Form ========================================================= -->
-    <section>
-      <div class="container-fluid px-lg-5 py-lg-3">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="container-fluid px-lg-5 py-lg-3">
-              <div class="row">
-                <div class="col-lg-12">
-                  <h1 class="display-4">Submit Form</h1>
-                  <p class="lead">
-                    Please fill out the form below to submit your receipt.
-                  </p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-12">
-                  <form
-                    action="https://fetch-hiring.s3.amazonaws.com/hiring.json"
-                    method="POST"
-                    enctype="multipart/form-data"
-                  >
-                    <div class="mb-3">
-                      <label for="name" class="form-label">Name</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="name"
-                        name="name"
-                        placeholder="Enter your name"
-                        required
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label for="email" class="form-label">Email</label>
-                      <input
-                        type="email"
-                        class="form-control"
-                        id="email"
-                        name="email"
-                        placeholder="Enter your email"
-                        required
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label for="receipt" class="form-label">Receipt</label>
-                      <input
-                        type="file"
-                        class="form-control"
-                        id="receipt"
-                        name="receipt"
-                        required
-                      />
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                      Submit
-                    </button>
-                  </form>
-                </div>
-              </div>
+    <section class="container-fluid">
+      <div
+        class="row d-flex justify-content-center align-items-end px-3 px-lg-5"
+      >
+        <!-- ======== Title/image ======== -->
+        <div class="col-lg-5">
+          <div class="col">
+            <div class="col text-center">
+              <h2 class="title">Tap into the power of Fetch</h2>
+              <p class="page-ext py-3 fs-5">
+                With more daily active users than Starbucks & DoorDash, Fetch
+                can help you do big things. Join today!
+              </p>
+            </div>
+            <div class="col d-none d-lg-block">
+              <img
+                src="./images/fetch-rewards-round-hat-coffee-image.png"
+                alt="Sample photo"
+                class="img-fluid"
+              />
             </div>
           </div>
+        </div>
+        <!-- ======== Form ======== -->
+        <div class="col col-lg-6 offset-lg-1 align-self-center">
+          <form>
+            <div class="mb-3">
+              <label for="name" class="form-label"
+                >Name <span class="text-accent">*</span></label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                aria-describedby="name"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label"
+                >Email <span class="text-accent">*</span></label
+              >
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                aria-describedby="email"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label"
+                >Password <span class="text-accent">*</span></label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                aria-describedby="password"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="occupation" class="form-label"
+                >Occupation <span class="text-accent">*</span></label
+              >
+              <select class="form-select overflow-auto" aria-label="occupation">
+                <option value="default" selected>
+                  Please select your occupation
+                </option>
+              </select>
+            </div>
+            <div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
         </div>
       </div>
     </section>
@@ -151,12 +164,12 @@
     <!-- ========================================================= Footer ========================================================= -->
     <footer class="container-fluid">
       <div class="row pt-5 pb-3">
-        <div class="col-12 d-sm-flex justify-content-between">
+        <div class="col-12 d-sm-flex justify-content-evenly pd-5">
           <!-- ======== Explore List ======== -->
-          <div class="d-flex flex-column text-start col-md-3 offset-md-3">
+          <div class="d-flex flex-column text-center company-resources-lists">
             <h2 class="fs-2">Explore</h2>
             <ul class="list-unstyled fs-5">
-              <li class="pt-3">
+              <li class="pt-4">
                 <a
                   href="https://www.fetchrewards.com/brands"
                   target="_blank"
@@ -164,7 +177,7 @@
                   >Explore brands</a
                 >
               </li>
-              <li class="pt-3">
+              <li class="pt-4">
                 <a
                   href="https://partners.fetchrewards.com/"
                   target="_blank"
@@ -172,7 +185,7 @@
                   >Partner with us</a
                 >
               </li>
-              <li class="pt-3">
+              <li class="pt-4">
                 <a
                   href="https://www.fetchrewards.com/careers"
                   target="_blank"
@@ -180,7 +193,7 @@
                   >Work at Fetch</a
                 >
               </li>
-              <li class="pt-3">
+              <li class="pt-4">
                 <a
                   href="https://signup.partnerize.com/signup/en/fetchrewards"
                   target="_blank"
@@ -191,10 +204,12 @@
             </ul>
           </div>
           <!-- ======== Resources List ======== -->
-          <div class="d-flex flex-column text-start col-md-6 pt-4 pt-sm-0">
+          <div
+            class="d-flex flex-column text-center company-resources-lists pt-4 pt-sm-0"
+          >
             <h2 class="fs-2">Resources</h2>
             <ul class="list-unstyled fs-5">
-              <li class="pt-3">
+              <li class="pt-4">
                 <a
                   href="https://help.fetch.com/hc/en-us"
                   target="_blank"
@@ -202,7 +217,7 @@
                   >Help & Support</a
                 >
               </li>
-              <li class="pt-3">
+              <li class="pt-4">
                 <a
                   href="https://www.fetchrewards.com/terms-of-service"
                   target="_blank"
@@ -210,7 +225,7 @@
                   >Fetch Rewards Terms of Service</a
                 >
               </li>
-              <li class="pt-3">
+              <li class="pt-4">
                 <a
                   href="https://www.fetchrewards.com/privacy-policy"
                   target="_blank"
@@ -218,7 +233,7 @@
                   >Privacy Policy</a
                 >
               </li>
-              <li class="pt-3">
+              <li class="pt-4">
                 <a
                   href="https://www.fetchrewards.com/california-consumer-privacy-act-ccpa"
                   target="_blank"
@@ -230,7 +245,7 @@
           </div>
         </div>
         <!-- ======== Logo/Follow Us/Copyright ======== -->
-        <div class="col-8 offset-2 pt-5 text-center">
+        <div class="col-8 offset-2 text-center pt-5">
           <img
             src="./images/fetch-rewards-white-dog.png"
             alt="Fetch Rewards Logo"
@@ -239,7 +254,7 @@
           <h2 class="follow-us">FOLLOW US</h2>
           <div class="justify-content-center d-flex">
             <ul
-              class="list-group list-unstyled list-group-horizontal fs-1 gap-5"
+              class="list-group list-unstyled list-group-horizontal fs-2 gap-5"
             >
               <li>
                 <a

@@ -24,6 +24,18 @@
 /**************************** Form ****************************/
 section {
   background-color: rgb(39 28 71);
+  padding-top: 125px;
+}
+.title,
+p,
+label {
+  color: #fff !important;
+}
+.title {
+  font-size: 55px;
+}
+.text-accent {
+  color: red !important;
 }
 /**************************** Footer ****************************/
 footer {
@@ -39,7 +51,7 @@ footer {
   -webkit-background-size: cover;
 }
 .company-resources-lists > ul > li:hover {
-  text-decoration: underline;
+  text-decoration: underline !important;
 }
 .fa-brands:hover {
   cursor: pointer;
