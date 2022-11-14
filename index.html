@@ -111,7 +111,7 @@
         <div class="col col-lg-6 offset-lg-1 align-self-center">
           <form>
             <div class="mb-3">
-              <label for="name" class="form-label"
+              <label for="name" class="form-label fs-5"
                 >Name <span class="text-accent">*</span></label
               >
               <input
@@ -122,7 +122,7 @@
               />
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label"
+              <label for="email" class="form-label fs-5"
                 >Email <span class="text-accent">*</span></label
               >
               <input
@@ -133,7 +133,7 @@
               />
             </div>
             <div class="mb-3">
-              <label for="password" class="form-label"
+              <label for="password" class="form-label fs-5"
                 >Password <span class="text-accent">*</span></label
               >
               <input
@@ -144,17 +144,42 @@
               />
             </div>
             <div class="mb-3">
-              <label for="occupation" class="form-label"
+              <label for="occupation" class="form-label fs-5"
                 >Occupation <span class="text-accent">*</span></label
               >
-              <select class="form-select overflow-auto" aria-label="occupation">
-                <option value="default" selected>
+              <select
+                class="form-select overflow-auto"
+                id="ocupations-container"
+                aria-label="occupation"
+              >
+                <option value="default" selected class="default">
                   Please select your occupation
                 </option>
               </select>
             </div>
-            <div>
-              <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="mb-3">
+              <label for="occupation" class="form-label fs-5"
+                >State <span class="text-accent">*</span></label
+              >
+              <select
+                class="form-select overflow-auto"
+                id="states-container"
+                aria-label="occupation"
+              >
+                <option value="default" selected class="default">
+                  Please select your state
+                </option>
+              </select>
+            </div>
+            <div
+              class="mb-3 py-3 pe-2 pb-lg-0 d-flex justify-content-end col-12"
+            >
+              <button
+                type="submit"
+                class="btn btn-primary submit rounded-1 fs-5"
+              >
+                Join!
+              </button>
             </div>
           </form>
         </div>

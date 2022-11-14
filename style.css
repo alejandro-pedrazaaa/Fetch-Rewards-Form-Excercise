@@ -37,6 +37,11 @@ label {
 .text-accent {
   color: red !important;
 }
+.submit {
+  background-color: #f25650 !important;
+  border: none;
+  color: rgb(39 28 71) !important;
+}
 /**************************** Footer ****************************/
 footer {
   background-image: url("./images/fetch-rewards-footer-image.png");
