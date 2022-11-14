@@ -1,0 +1,61 @@
+* {
+  color: rgb(48, 13, 56) !important;
+  transition: all 0.3s ease-in-out;
+  font-family: sans-serif;
+}
+.nav-link,
+.company-resources-lists > ul > li,
+.copyright {
+  font-weight: 500;
+}
+/**************************** Navbar ****************************/
+.navbar {
+  background-color: #fff !important;
+}
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(48, 13, 56)' stroke-width='5' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+.download-app {
+  font-family: sans-serif;
+  color: #fff !important;
+  background-color: #300d38 !important;
+  border: none;
+}
+/**************************** Form ****************************/
+section {
+  background-color: rgb(39 28 71);
+}
+/**************************** Footer ****************************/
+footer {
+  background-image: url("https://www.fetchrewards.com/assets/images/banners/footer-image@2x.png");
+  background-position: center;
+  background-size: cover;
+  min-height: auto;
+  position: relative;
+  text-align: center;
+  width: 100%;
+  -o-background-size: cover;
+  -moz-background-size: cover;
+  -webkit-background-size: cover;
+}
+.company-resources-lists > ul > li:hover {
+  text-decoration: underline;
+}
+.fa-brands:hover {
+  cursor: pointer;
+}
+.follow-us {
+  font-weight: 900;
+}
+.fa-brands {
+  color: #300d38 !important;
+}
+/**************************** Media Queries ****************************/
+@media (max-width: 767px) {
+  .nav-link {
+    font-size: x-large;
+  }
+  .navbar-nav {
+    height: 100vh;
+  }
+}
