@@ -13,6 +13,9 @@ This webpage contains a user creation form and the aesthetics are inspired by [F
    $ git clone https:/github.com/alejandro-pedrazaaa/Fetch-Rewards-User-Creation-Form.git
    ```
 2. cd into the new folder 
+  ```sh
+   $ cd Fetch-Rewards-User-Creation-Form
+   ```
 3. Start working on your own version of this website
 
 
