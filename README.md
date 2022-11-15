@@ -1,12 +1,10 @@
-# Fetch-Rewards-Form-Excercise
+# Fetch Rewards User Creation Form
 
-[Click here](https://alejandro-pedrazaaa.github.io/Fetch-Rewards-User-Creation-Form/) to visit and interact with this application.
-# Project Title
+[Click here](https://alejandro-pedrazaaa.github.io/Fetch-Rewards-User-Creation-Form/) to visit and interact with this webpage.
 
-One Paragraph of the project description
+### What is this webpage?
 
-Initially appeared on
-[gist](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2). But the page cannot open anymore so that is why I have moved it here.
+This webpage contains a user creation form and the aesthetic are inspired by [Fetch Rewards](https://www.fetchrewards.com/). The webpage checks if the user information that the user provided is correct. If the information is not, the user is prompted to check what fields are incorrect and fix them. Once all of the fields have valid information, the user is notified and the information is "sent" as an object to the API
 
 ## Getting Started
 
