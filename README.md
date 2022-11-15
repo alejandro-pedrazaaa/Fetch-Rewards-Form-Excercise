@@ -43,6 +43,7 @@ Don't forget to give the project a star! Thanks again!
 Inspiration, code snippets, etc:
    * [Fetch Rewards Main Page](https://www.fetchrewards.com/)
    * [Fetch Rewards Page With a Form](https://partners.fetchrewards.com/)
+   * [Bootstrap Templates](https://getbootstrap.com/)
 
 ## Contact Me
 
