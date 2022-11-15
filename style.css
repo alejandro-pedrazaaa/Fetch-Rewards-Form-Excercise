@@ -26,7 +26,7 @@
 /**************************** Form ****************************/
 section {
   background-color: rgb(39 28 71);
-  padding-top: 125px;
+  padding-top: 150px;
 }
 .title,
 p,
@@ -47,7 +47,8 @@ label {
 .submit:hover {
   background-color: #ffa900 !important;
 }
-.error {
+.error,
+.error-message {
   color: #f25650 !important;
 }
 /**************************** Footer ****************************/
@@ -84,6 +85,6 @@ footer {
     height: 100vh;
   }
 }
-#error-border {
-  border: 3px solid #f25650;
+.error-border {
+  border: 3px solid #f25650 !important;
 }

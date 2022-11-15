@@ -18,7 +18,7 @@ const getDataFromAPI = async () => {
   createAndDisplayStates(data.states);
 };
 
-const selectContainer = document.querySelector("#ocupations-container");
+const selectContainer = document.querySelector("#occupation");
 const createAndDisplayOptions = (occupations) => {
   occupations.forEach((occupation) => {
     const option = document.createElement("option");
@@ -29,7 +29,7 @@ const createAndDisplayOptions = (occupations) => {
   });
 };
 
-const stateContainer = document.querySelector("#states-container");
+const stateContainer = document.querySelector("#state");
 const createAndDisplayStates = (states) => {
   states.forEach((state) => {
     const option = document.createElement("option");
@@ -40,22 +40,15 @@ const createAndDisplayStates = (states) => {
   });
 };
 
-const getUserInput = () => {
-  const name = document.querySelector("#name").value;
-  const email = document.querySelector("#email").value;
-  const password = document.querySelector("#password").value;
-  const occupation = selectContainer.value;
-  const state = stateContainer.value;
+const getUserInput = async () => {
+  const requiredInputs = document.querySelectorAll(".required-input");
 
-  const data = {
-    name: name,
-    email: email,
-    password: password,
-    occupation: occupation,
-    state: state,
-  };
+  const data = {};
+  for (let i = 0; i < requiredInputs.length; i++) {
+    data[requiredInputs[i].id] = requiredInputs[i].value;
+  }
 
-  if (checkIfDataIsValid(data)) {
+  if (checkIfDataIsValid(requiredInputs)) {
     sendDataToAPI(data);
   }
 };
@@ -68,33 +61,99 @@ const sendDataToAPI = async (data) => {
     },
     body: JSON.stringify(data),
   });
-
-  displaySuccessOrError(res);
+  console.log(res);
+  return res;
 };
 
-const checkIfDataIsValid = (data) => {
-  const inputIds = Object.keys(data);
-  const inputValues = Object.values(data);
+const checkIfDataIsValid = (input) => {
+  let isValid = true;
+  const errorMessages = document.querySelectorAll(".error-message");
 
-  for (let i = 0; i < inputIds.length; i++) {
-    if (inputValues[i] === "" || inputValues[i] === "default") {
-      //get their index
-      const index = inputIds.indexOf(inputIds[i]);
-      inputIds[i].classList.add("error-border");
-      console.log(index);
+  for (let i = 0; i < input.length; i++) {
+    let inputId = input[i].id;
+    switch (inputId) {
+      case "name":
+        if (input[i].value.length < 5) {
+          input[i].classList.add("error-border");
+          errorMessages[i].hidden = false;
+          errorMessages[i].textContent = "Please, enter a valid name";
+          isValid = false;
+        } else {
+          input[i].classList.remove("error-border");
+          errorMessages[i].hidden = true;
+        }
+        break;
+      case "email":
+        if (!validateEmail(input[i].value)) {
+          input[i].classList.add("error-border");
+          errorMessages[i].hidden = false;
+          errorMessages[i].textContent = "Please, enter a valid email address";
+          isValid = false;
+        } else {
+          input[i].classList.remove("error-border");
+          errorMessages[i].hidden = true;
+        }
+        break;
+      case "password":
+        if (input[i].value.length < 8) {
+          input[i].classList.add("error-border");
+          errorMessages[i].hidden = false;
+          errorMessages[i].textContent =
+            "Your password must be at least 8 characters long";
+          isValid = false;
+        } else if (!validatePassword(input[i].value)) {
+          input[i].classList.add("error-border");
+          errorMessages[i].hidden = false;
+          errorMessages[i].textContent =
+            "Your password must have eight characters with one number, one special character, and a combination of uppercase and lowercase letters";
+          isValid = false;
+        } else {
+          input[i].classList.remove("error-border");
+          errorMessages[i].hidden = true;
+        }
+        break;
+      case "occupation":
+        if (input[i].value === "") {
+          input[i].classList.add("error-border");
+          errorMessages[i].hidden = false;
+          errorMessages[i].textContent = "Please, enter a valid occupation";
+          isValid = false;
+        } else if (input[i].value !== "") {
+          input[i].classList.remove("error-border");
+          errorMessages[i].hidden = true;
+        }
+        break;
+      case "state":
+        if (input[i].value === "") {
+          input[i].classList.add("error-border");
+          errorMessages[i].hidden = false;
+          errorMessages[i].textContent = "Please, enter a valid state";
+          isValid = false;
+        } else if (input[i].value !== "") {
+          input[i].classList.remove("error-border");
+          errorMessages[i].hidden = true;
+        }
+        break;
+      default:
+        break;
     }
   }
-
-  console.log(inputIds);
+  displaySuccessOrError(isValid, input);
+  return isValid;
 };
 
-const displaySuccessOrError = (res) => {
-  const modal = document.querySelector(".modal-body");
-  if (res.status === 201) {
-    modal.innerText = "Success! Your profile has been created.";
-  } else {
-    modal.innerText = "Failure! It seems like there was an error.";
-  }
+/**
+ * @description - Helper function to validate the email
+ */
+const validateEmail = (email) => {
+  const re =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+};
+
+const validatePassword = (password) => {
+  const re = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+  return re.test(String(password));
 };
 
 const submitButton = document.querySelector(".submit");
@@ -104,3 +163,15 @@ submitButton.addEventListener("click", (e) => {
 });
 
 getDataFromAPI();
+
+const displaySuccessOrError = (valid, input) => {
+  const modal = document.querySelector(".modal-body");
+  if (!valid) {
+    modal.innerText = "Please, make sure all of the fields are valid.";
+  } else {
+    modal.innerText = "Your form has been submitted successfully!";
+    for (let i = 0; i < input.length; i++) {
+      input[i].value = "";
+    }
+  }
+};
