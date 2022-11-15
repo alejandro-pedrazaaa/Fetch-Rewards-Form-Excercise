@@ -10,7 +10,7 @@ This webpage contains a user creation form and the aesthetics are inspired by [F
 
 1. Open your terminal and then type: 
   ```sh
-   $ git clone https://github.com/alejandro-pedrazaaa/Movies-App.git
+   $ git clone https://github.com/alejandro-pedrazaaa/Fetch-Rewards-User-Creation-Form.git
    ```
 2. cd into the new folder. 
 3. Install the required dependencies:
