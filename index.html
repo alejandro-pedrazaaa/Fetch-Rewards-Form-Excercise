@@ -14,10 +14,10 @@
   </head>
 
   <body>
-    <!-- ========================================================= Navigation Bar ========================================================= -->
+    <!-- ==================== Navigation Bar ===================== -->
     <nav class="navbar fixed-top navbar-dark bg-primary navbar-expand-md">
-      <div class="container-fluid px-md-5 py-md-3 header-container">
-        <!-- ======== Logo ======== -->
+      <div class="container-fluid px-md-5 py-3 header-container">
+        <!-- Logo -->
         <a
           class="navbar-brand"
           href="https://www.fetchrewards.com/"
@@ -29,7 +29,7 @@
             class="img-fluid logo"
           />
         </a>
-        <!-- ======== NavBar Menu ======== -->
+        <!-- NavBar Menu -->
         <button
           class="navbar-toggler"
           type="button"
@@ -83,12 +83,12 @@
       </div>
     </nav>
     <!-- End Navbar -->
-    <!-- ========================================================= Form ========================================================= -->
+    <!-- ==================== Form ===================== -->
     <section class="container-fluid">
       <div
         class="row d-flex justify-content-center align-items-end px-3 px-lg-5"
       >
-        <!-- ======== Title/image ======== -->
+        <!-- Title/image -->
         <div class="col-lg-5">
           <div class="col">
             <div class="col text-center">
@@ -107,9 +107,9 @@
             </div>
           </div>
         </div>
-        <!-- ======== Form ======== -->
+        <!-- Form -->
         <div class="col col-lg-6 offset-lg-1 align-self-center">
-          <form>
+          <form action="" id="form">
             <div class="mb-3">
               <label for="name" class="form-label fs-5"
                 >Name <span class="text-accent">*</span></label
@@ -177,6 +177,10 @@
               <button
                 type="submit"
                 class="btn btn-primary submit rounded-1 fs-5"
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
               >
                 Join!
               </button>
@@ -185,16 +189,38 @@
         </div>
       </div>
     </section>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header border border-0 pb-0">
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body fs-5 text-center align-items-start"></div>
+        </div>
+      </div>
+    </div>
     <!-- End Form -->
-    <!-- ========================================================= Footer ========================================================= -->
+    <!-- ==================== Footer ===================== -->
     <footer class="container-fluid">
       <div class="row pt-5 pb-3">
         <div class="col-12 d-sm-flex justify-content-evenly pd-5">
-          <!-- ======== Explore List ======== -->
+          <!-- Explore List -->
           <div class="d-flex flex-column text-center company-resources-lists">
             <h2 class="fs-2">Explore</h2>
             <ul class="list-unstyled fs-5">
-              <li class="pt-4">
+              <li class="pt-3">
                 <a
                   href="https://www.fetchrewards.com/brands"
                   target="_blank"
@@ -228,13 +254,13 @@
               </li>
             </ul>
           </div>
-          <!-- ======== Resources List ======== -->
+          <!-- Resources List -->
           <div
             class="d-flex flex-column text-center company-resources-lists pt-4 pt-sm-0"
           >
             <h2 class="fs-2">Resources</h2>
             <ul class="list-unstyled fs-5">
-              <li class="pt-4">
+              <li class="pt-3">
                 <a
                   href="https://help.fetch.com/hc/en-us"
                   target="_blank"
@@ -269,7 +295,7 @@
             </ul>
           </div>
         </div>
-        <!-- ======== Logo/Follow Us/Copyright ======== -->
+        <!-- Logo/Follow Us/Copyright -->
         <div class="col-8 offset-2 text-center pt-5">
           <img
             src="./images/fetch-rewards-white-dog.png"
