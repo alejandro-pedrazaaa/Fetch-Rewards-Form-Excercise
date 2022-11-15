@@ -10,16 +10,16 @@ This webpage contains a user creation form and the aesthetics are inspired by [F
 
 1. Open your terminal and then type: 
   ```sh
-   $ git clone https://github.com/alejandro-pedrazaaa/Fetch-Rewards-User-Creation-Form.git
+   $ git clone https:/github.com/alejandro-pedrazaaa/Fetch-Rewards-User-Creation-Form.git
    ```
 2. cd into the new folder. 
-3. Install the required dependencies:
+3. Create a new branch
   ```sh
-$ npm install
+   $ git branch <new_branch_name>
    ```
-3. Run the project:
+   3. Create a new branch
   ```sh
-$ npm start
+   $ git branch <new_branch_name>
    ```
 ## Dependencies
 
