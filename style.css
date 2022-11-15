@@ -47,6 +47,9 @@ label {
 .submit:hover {
   background-color: #ffa900 !important;
 }
+.error {
+  color: #f25650 !important;
+}
 /**************************** Footer ****************************/
 footer {
   background-image: url("./images/fetch-rewards-footer-image.png");
@@ -80,4 +83,7 @@ footer {
   .navbar-nav {
     height: 100vh;
   }
+}
+#error-border {
+  border: 3px solid #f25650;
 }

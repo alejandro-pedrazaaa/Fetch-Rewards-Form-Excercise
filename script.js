@@ -10,11 +10,6 @@ window.onscroll = () => {
   }
 };
 
-/**
- * @description - Asynchronously fetches the data from the API
- *
- * @returns {Promise} - The data from the API
- */
 const getDataFromAPI = async () => {
   const res = await fetch("https://frontend-take-home.fetchrewards.com/form");
   const data = await res.json();
@@ -23,12 +18,6 @@ const getDataFromAPI = async () => {
   createAndDisplayStates(data.states);
 };
 
-/**
- * @description - Adds options to the ocupations select tag with the values
- * from the API
- *
- * @param {Array} occupations - The occupations from the API
- */
 const selectContainer = document.querySelector("#ocupations-container");
 const createAndDisplayOptions = (occupations) => {
   occupations.forEach((occupation) => {
@@ -40,12 +29,6 @@ const createAndDisplayOptions = (occupations) => {
   });
 };
 
-/**
- * @description - Adds options to the states select tag with the values
- * from the API
- *
- * @param {Array} occupations - The occupations from the API
- */
 const stateContainer = document.querySelector("#states-container");
 const createAndDisplayStates = (states) => {
   states.forEach((state) => {
@@ -57,14 +40,7 @@ const createAndDisplayStates = (states) => {
   });
 };
 
-/**
- * @description - Asynchronously fetches the data from the API and sends it to
- * check if the data is valid
- *
- * @param {Object} data - The data from the form
- * @returns {Promise} - The response from the API
- */
-const sendDataToAPI = async () => {
+const getUserInput = () => {
   const name = document.querySelector("#name").value;
   const email = document.querySelector("#email").value;
   const password = document.querySelector("#password").value;
@@ -79,6 +55,12 @@ const sendDataToAPI = async () => {
     state: state,
   };
 
+  if (checkIfDataIsValid(data)) {
+    sendDataToAPI(data);
+  }
+};
+
+const sendDataToAPI = async (data) => {
   const res = await fetch("https://frontend-take-home.fetchrewards.com/form", {
     method: "POST",
     headers: {
@@ -90,13 +72,22 @@ const sendDataToAPI = async () => {
   displaySuccessOrError(res);
 };
 
-/**
- * @description - Displays a success or error message depending on the response
- * from the API
- *
- * @param {Object} res - The response from the API
- * @returns {Promise} - Based on the response, it will display a success or error
- */
+const checkIfDataIsValid = (data) => {
+  const inputIds = Object.keys(data);
+  const inputValues = Object.values(data);
+
+  for (let i = 0; i < inputIds.length; i++) {
+    if (inputValues[i] === "" || inputValues[i] === "default") {
+      //get their index
+      const index = inputIds.indexOf(inputIds[i]);
+      inputIds[i].classList.add("error-border");
+      console.log(index);
+    }
+  }
+
+  console.log(inputIds);
+};
+
 const displaySuccessOrError = (res) => {
   const modal = document.querySelector(".modal-body");
   if (res.status === 201) {
@@ -106,16 +97,10 @@ const displaySuccessOrError = (res) => {
   }
 };
 
-/**
- * @description - When the user clicks the submit button, the data is sent to the API
- * and the user is notified if the data was sent successfully or not
- *
- * @param {Event} e - The event object
- */
 const submitButton = document.querySelector(".submit");
 submitButton.addEventListener("click", (e) => {
   e.preventDefault();
-  sendDataToAPI();
+  getUserInput();
 });
 
 getDataFromAPI();

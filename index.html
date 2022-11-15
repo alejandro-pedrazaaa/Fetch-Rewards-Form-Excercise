@@ -116,10 +116,11 @@
               >
               <input
                 type="text"
-                class="form-control"
+                class="form-control required-input"
                 id="name"
                 aria-describedby="name"
               />
+              <span class="fs-5 error" hidden>Please enter your name</span>
             </div>
             <div class="mb-3">
               <label for="email" class="form-label fs-5"
@@ -127,7 +128,7 @@
               >
               <input
                 type="email"
-                class="form-control"
+                class="form-control required-input"
                 id="email"
                 aria-describedby="email"
               />
@@ -138,7 +139,7 @@
               >
               <input
                 type="password"
-                class="form-control"
+                class="form-control required-input"
                 id="password"
                 aria-describedby="password"
               />
@@ -148,7 +149,7 @@
                 >Occupation <span class="text-accent">*</span></label
               >
               <select
-                class="form-select overflow-auto"
+                class="form-select required-input"
                 id="ocupations-container"
                 aria-label="occupation"
               >
@@ -162,7 +163,7 @@
                 >State <span class="text-accent">*</span></label
               >
               <select
-                class="form-select overflow-auto"
+                class="form-select required-input"
                 id="states-container"
                 aria-label="occupation"
               >
