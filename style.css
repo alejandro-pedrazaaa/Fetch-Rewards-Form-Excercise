@@ -18,25 +18,25 @@
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(48, 13, 56)' stroke-width='5' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
 .modal-content {
-  background-color: #f25650 !important;
+  background-color: #ffa900 !important;
 }
 .modal-body {
   color: #fff !important;
 }
 /**************************** Form ****************************/
-section {
+.form-container {
   background-color: rgb(39 28 71);
   padding-top: 150px;
 }
 .title,
-p,
+.paragraph,
 label {
   color: #fff !important;
 }
 .title {
   font-size: 55px;
 }
-.text-accent {
+.required-accent {
   color: #f25650 !important;
 }
 .submit {
@@ -47,9 +47,11 @@ label {
 .submit:hover {
   background-color: #ffa900 !important;
 }
-.error,
 .error-message {
   color: #f25650 !important;
+}
+.error-border {
+  border: 3px solid #f25650 !important;
 }
 /**************************** Footer ****************************/
 footer {
@@ -67,24 +69,22 @@ footer {
 .company-resources-lists > ul > li:hover {
   text-decoration: underline !important;
 }
-.fa-brands:hover {
-  cursor: pointer;
-}
 .follow-us {
   font-weight: 900;
 }
 .fa-brands {
   color: #300d38 !important;
 }
+.fa-brands:hover {
+  cursor: pointer;
+}
 /**************************** Media Queries ****************************/
 @media (max-width: 767px) {
+  /* Navbar covers entire screen */
   .nav-link {
     font-size: x-large;
   }
   .navbar-nav {
     height: 100vh;
   }
-}
-.error-border {
-  border: 3px solid #f25650 !important;
 }

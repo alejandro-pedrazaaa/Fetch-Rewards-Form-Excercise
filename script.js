@@ -10,25 +10,45 @@ window.onscroll = () => {
   }
 };
 
+/**
+ * @description - Async function that fetches the data from the API
+ *
+ * @returns - The data from the API
+ */
 const getDataFromAPI = async () => {
   const res = await fetch("https://frontend-take-home.fetchrewards.com/form");
   const data = await res.json();
 
-  createAndDisplayOptions(data.occupations);
+  createAndDisplayOccupations(data.occupations);
   createAndDisplayStates(data.states);
 };
+getDataFromAPI();
 
-const selectContainer = document.querySelector("#occupation");
-const createAndDisplayOptions = (occupations) => {
+/**
+ * @description - Function that gets the "occupations" from the API and populates the #occupation
+ * select element with the data
+ *
+ * @param {Array} occupations - The occupations from the API
+ * @returns - The #occupation select element populated with the "occupations" from the API
+ */
+const occupationContainer = document.querySelector("#occupation");
+const createAndDisplayOccupations = (occupations) => {
   occupations.forEach((occupation) => {
     const option = document.createElement("option");
     option.value = occupation;
     option.textContent = occupation;
 
-    selectContainer.appendChild(option);
+    occupationContainer.appendChild(option);
   });
 };
 
+/**
+ * @description - Function that gets the "states" array from the API and populates the #state
+ * select element with the data
+ *
+ * @param {Array} states - The states array from the API
+ * @returns - The #state select element populated with the "states" from the API
+ */
 const stateContainer = document.querySelector("#state");
 const createAndDisplayStates = (states) => {
   states.forEach((state) => {
@@ -40,7 +60,20 @@ const createAndDisplayStates = (states) => {
   });
 };
 
-const getUserInput = async () => {
+/**
+ * @description - Event listener for the submit button
+ */
+const submitButton = document.querySelector(".submit");
+submitButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  getUserInput();
+});
+
+/**
+ * @description - Function that is called when the submit button is clicked. It gets the user input,
+ * saves it in an object, and if the input is valid, it sends the data to the API
+ */
+const getUserInput = () => {
   const requiredInputs = document.querySelectorAll(".required-input");
 
   const data = {};
@@ -53,18 +86,12 @@ const getUserInput = async () => {
   }
 };
 
-const sendDataToAPI = async (data) => {
-  const res = await fetch("https://frontend-take-home.fetchrewards.com/form", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-  console.log(res);
-  return res;
-};
-
+/**
+ * @description - Function that checks if the user input is valid
+ *
+ * @param {Array} input - The user input
+ * @returns {Boolean} - True if the input is valid, false otherwise
+ */
 const checkIfDataIsValid = (input) => {
   let isValid = true;
   const errorMessages = document.querySelectorAll(".error-message");
@@ -144,6 +171,9 @@ const checkIfDataIsValid = (input) => {
 
 /**
  * @description - Helper function to validate the email
+ *
+ * @param {String} email - The email to validate
+ * @returns {Boolean} - True if the email is valid, false otherwise
  */
 const validateEmail = (email) => {
   const re =
@@ -151,27 +181,55 @@ const validateEmail = (email) => {
   return re.test(String(email).toLowerCase());
 };
 
+/**
+ * @description - Helper function to validate the password
+ *
+ * @param {String} password - The password to validate
+ * @returns {Boolean} - True if the password is valid, false otherwise
+ */
 const validatePassword = (password) => {
   const re = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
   return re.test(String(password));
 };
 
-const submitButton = document.querySelector(".submit");
-submitButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  getUserInput();
-});
-
-getDataFromAPI();
-
+/**
+ * @description - Function that displays a success or error popup window depending on the validity of
+ * all the inputs
+ *
+ * @param {Boolean} isValid - True if the input is valid, false otherwise
+ * @param {Array} input - The user input
+ * @returns {Boolean} - True if the input is valid, false otherwise
+ */
 const displaySuccessOrError = (valid, input) => {
   const modal = document.querySelector(".modal-body");
   if (!valid) {
     modal.innerText = "Please, make sure all of the fields are valid.";
   } else {
-    modal.innerText = "Your form has been submitted successfully!";
+    modal.innerText = "Your profile has been created!";
     for (let i = 0; i < input.length; i++) {
       input[i].value = "";
     }
+  }
+};
+
+/**
+ * @description - Async function that sends the data to the API
+ *
+ * @param {Object} data - The user input
+ * @returns - Console logs the response from the API
+ */
+const sendDataToAPI = async (data) => {
+  const res = await fetch("https://frontend-take-home.fetchrewards.com/form", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  //To make sure the status code is the same as the one given in the instructions (201)
+  if (res.status === 201) {
+    console.log("All fieds have been provided and are valid");
+  } else {
+    console.log("Error");
   }
 };
