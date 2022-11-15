@@ -12,15 +12,10 @@ This webpage contains a user creation form and the aesthetics are inspired by [F
   ```sh
    $ git clone https:/github.com/alejandro-pedrazaaa/Fetch-Rewards-User-Creation-Form.git
    ```
-2. cd into the new folder. 
-3. Create a new branch
-  ```sh
-   $ git branch <new_branch_name>
-   ```
-   3. Create a new branch
-  ```sh
-   $ git branch <new_branch_name>
-   ```
+2. cd into the new folder 
+3. Start working on your own version of this website
+
+
 ## Dependencies
 
 Make sure you have the latest git version and the latest Visual Studio Code
