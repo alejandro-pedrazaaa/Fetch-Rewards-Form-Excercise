@@ -1,12 +1,12 @@
 /**
  * @description - When the user scrolls the page, the header resizes smoothly
  */
-const headerContainer = document.querySelector(".header-container");
 window.onscroll = () => {
+  const navContainer = document.querySelector(".navigation-container");
   if (window.scrollY > 10) {
-    headerContainer.classList.remove("py-3");
+    navContainer.classList.remove("py-3");
   } else {
-    headerContainer.classList.add("py-3");
+    navContainer.classList.add("py-3");
   }
 };
 
@@ -15,65 +15,57 @@ window.onscroll = () => {
  *
  * @returns - The data from the API
  */
-const getDataFromAPI = async () => {
+const getOccupationsAndStatesFromAPI = async () => {
   const res = await fetch("https://frontend-take-home.fetchrewards.com/form");
   const data = await res.json();
 
-  createAndDisplayOccupations(data.occupations);
-  createAndDisplayStates(data.states);
+  const occupationsAndStates = data.occupations.concat(data.states);
+  createAndDisplayOccupationsAndStates(occupationsAndStates);
 };
-getDataFromAPI();
+getOccupationsAndStatesFromAPI();
 
 /**
- * @description - Function that gets the "occupations" from the API and populates the #occupation
- * select element with the data
+ * @description - Function that gets "occupations" and "states" from the API and populates
+ * both the Occupation and State dropdown menus
  *
- * @param {Array} occupations - The occupations from the API
- * @returns - The #occupation select element populated with the "occupations" from the API
+ * @param {Array} occupationsAndStates - The data from the API
+ * @returns - The data from the API as option in the dropdowns Occupation and State
  */
-const occupationContainer = document.querySelector("#occupation");
-const createAndDisplayOccupations = (occupations) => {
-  occupations.forEach((occupation) => {
-    const option = document.createElement("option");
-    option.value = occupation;
-    option.textContent = occupation;
 
-    occupationContainer.appendChild(option);
+const createAndDisplayOccupationsAndStates = (occupationsAndStates) => {
+  const occupationsDropdownMenu = document.querySelector("#occupation");
+  const stateDropdownMenu = document.querySelector("#state");
+
+  occupationsAndStates.forEach((occupationOrState) => {
+    const optionTag = document.createElement("option");
+
+    if (typeof occupationOrState === "string") {
+      optionTag.value = occupationOrState;
+      optionTag.textContent = occupationOrState;
+      occupationsDropdownMenu.appendChild(optionTag);
+    } else {
+      optionTag.value = occupationOrState.name;
+      optionTag.textContent = occupationOrState.name;
+      stateDropdownMenu.appendChild(optionTag);
+    }
   });
 };
 
 /**
- * @description - Function that gets the "states" array from the API and populates the #state
- * select element with the data
- *
- * @param {Array} states - The states array from the API
- * @returns - The #state select element populated with the "states" from the API
+ * @description - Event listener for the "Join!" button
  */
-const stateContainer = document.querySelector("#state");
-const createAndDisplayStates = (states) => {
-  states.forEach((state) => {
-    const option = document.createElement("option");
-    option.value = state.name;
-    option.textContent = state.name;
-
-    stateContainer.appendChild(option);
-  });
-};
-
-/**
- * @description - Event listener for the submit button
- */
-const submitButton = document.querySelector(".submit");
-submitButton.addEventListener("click", (e) => {
+const joinButton = document.querySelector(".submit");
+joinButton.addEventListener("click", (e) => {
   e.preventDefault();
-  getUserInput();
+  getAndSendUserInput();
 });
 
 /**
- * @description - Function that is called when the submit button is clicked. It gets the user input,
- * saves it in an object, and if the input is valid, it sends the data to the API
+ * @description - Function that is called when the "Join!" button is clicked. The function
+ * gets the user input, saves it in an object and, if the input is valid, it sends the
+ * data to the API
  */
-const getUserInput = () => {
+const getAndSendUserInput = () => {
   const requiredInputs = document.querySelectorAll(".required-input");
 
   const data = {};
@@ -89,75 +81,70 @@ const getUserInput = () => {
 /**
  * @description - Function that checks if the user input is valid
  *
- * @param {Array} input - The user input
+ * @param {Array} userInput - The user input
  * @returns {Boolean} - True if the input is valid, false otherwise
  */
-const checkIfDataIsValid = (input) => {
-  let isValid = true;
+const checkIfDataIsValid = (requiredInputs) => {
   const errorMessages = document.querySelectorAll(".error-message");
+  let isValid = true;
 
-  for (let i = 0; i < input.length; i++) {
-    let inputId = input[i].id;
+  for (let i = 0; i < requiredInputs.length; i++) {
+    let inputId = requiredInputs[i].id;
+
     switch (inputId) {
       case "name":
-        if (input[i].value.length < 5) {
-          input[i].classList.add("error-border");
+        if (requiredInputs[i].value.length < 5) {
+          requiredInputs[i].classList.add("error-border");
           errorMessages[i].hidden = false;
-          errorMessages[i].textContent = "Please, enter a valid name";
           isValid = false;
         } else {
-          input[i].classList.remove("error-border");
+          requiredInputs[i].classList.remove("error-border");
           errorMessages[i].hidden = true;
         }
         break;
       case "email":
-        if (!validateEmail(input[i].value)) {
-          input[i].classList.add("error-border");
+        if (!validateEmail(requiredInputs[i].value)) {
+          requiredInputs[i].classList.add("error-border");
           errorMessages[i].hidden = false;
-          errorMessages[i].textContent = "Please, enter a valid email address";
           isValid = false;
         } else {
-          input[i].classList.remove("error-border");
+          requiredInputs[i].classList.remove("error-border");
           errorMessages[i].hidden = true;
         }
         break;
       case "password":
-        if (input[i].value.length < 8) {
-          input[i].classList.add("error-border");
+        if (requiredInputs[i].value.length < 8) {
+          requiredInputs[i].classList.add("error-border");
           errorMessages[i].hidden = false;
-          errorMessages[i].textContent =
-            "Your password must be at least 8 characters long";
           isValid = false;
-        } else if (!validatePassword(input[i].value)) {
-          input[i].classList.add("error-border");
+        } else if (!validatePassword(requiredInputs[i].value)) {
+          requiredInputs[i].classList.add("error-border");
           errorMessages[i].hidden = false;
           errorMessages[i].textContent =
-            "Your password must have eight characters with one number, one special character, and a combination of uppercase and lowercase letters";
+            "Your password must have at least eight characters, one number, one special character, and at least one uppercase letter";
           isValid = false;
         } else {
-          input[i].classList.remove("error-border");
+          requiredInputs[i].classList.remove("error-border");
           errorMessages[i].hidden = true;
         }
         break;
       case "occupation":
-        if (input[i].value === "") {
-          input[i].classList.add("error-border");
+        if (requiredInputs[i].value === "") {
+          requiredInputs[i].classList.add("error-border");
           errorMessages[i].hidden = false;
-          errorMessages[i].textContent = "Please, enter a valid occupation";
           isValid = false;
-        } else if (input[i].value !== "") {
-          input[i].classList.remove("error-border");
+        } else if (requiredInputs[i].value !== "") {
+          requiredInputs[i].classList.remove("error-border");
           errorMessages[i].hidden = true;
         }
         break;
       case "state":
-        if (input[i].value === "") {
-          input[i].classList.add("error-border");
+        if (requiredInputs[i].value === "") {
+          requiredInputs[i].classList.add("error-border");
           errorMessages[i].hidden = false;
-          errorMessages[i].textContent = "Please, enter a valid state";
           isValid = false;
-        } else if (input[i].value !== "") {
-          input[i].classList.remove("error-border");
+        } else if (requiredInputs[i].value !== "") {
+          requiredInputs[i].classList.remove("error-border");
           errorMessages[i].hidden = true;
         }
         break;
@@ -165,7 +152,7 @@ const checkIfDataIsValid = (input) => {
         break;
     }
   }
-  displaySuccessOrError(isValid, input);
+  displayPopupScreen(isValid, requiredInputs);
   return isValid;
 };
 
@@ -193,21 +180,22 @@ const validatePassword = (password) => {
 };
 
 /**
- * @description - Function that displays a success or error popup window depending on the validity of
- * all the inputs
+ * @description - Function that displays a success or error popup window depending on the
+ * validity of all the inputs
  *
- * @param {Boolean} isValid - True if the input is valid, false otherwise
- * @param {Array} input - The user input
- * @returns {Boolean} - True if the input is valid, false otherwise
+ * @param {Boolean} valid - True if the input is valid, false otherwise
+ * @param {Array} inputs - The inputs to clear if the information is valid
+ * @returns {Boolean} - True if the inputs were valid, false otherwise
  */
-const displaySuccessOrError = (valid, input) => {
-  const modal = document.querySelector(".modal-body");
+const displayPopupScreen = (valid, inputs) => {
+  const popupScreen = document.querySelector(".modal-body");
+
   if (!valid) {
-    modal.innerText = "Please, make sure all of the fields are valid.";
+    popupScreen.innerText = "Please, make sure all of the fields are valid.";
   } else {
-    modal.innerText = "Your profile has been created!";
-    for (let i = 0; i < input.length; i++) {
-      input[i].value = "";
+    popupScreen.innerText = "Your profile has been created!";
+    for (let i = 0; i < inputs.length; i++) {
+      inputs[i].value = "";
     }
   }
 };
@@ -229,8 +217,9 @@ const sendDataToAPI = async (data) => {
   //See what was sent to the API
   console.log(await res.json());
   //To make sure the status code is the same as the one given in the instructions (201)
+  console.log(data);
   if (res.status === 201) {
-    console.log("All fieds have been provided and are valid");
+    console.log("Success");
   } else {
     console.log("Error");
   }
