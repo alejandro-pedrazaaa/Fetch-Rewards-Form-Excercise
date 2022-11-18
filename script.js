@@ -214,6 +214,8 @@ const sendDataToAPI = async (data) => {
     },
     body: JSON.stringify(data),
   });
+  //See what was sent to the API
+  console.log(await res.json());
   //To make sure the status code is the same as the one given in the instructions (201)
   console.log(data);
   if (res.status === 201) {
