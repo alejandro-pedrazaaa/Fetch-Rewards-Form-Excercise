@@ -15,41 +15,49 @@ window.onscroll = () => {
  *
  * @returns - The data from the API
  */
-const getOccupationsAndStatesFromAPI = async () => {
-  const res = await fetch("https://frontend-take-home.fetchrewards.com/form");
-  const data = await res.json();
+const getDataFromAPI = async () => {
+  try {
+    const res = await fetch("https://frontend-take-home.fetchrewards.com/form");
+    const data = await res.json();
 
-  const occupationsAndStates = data.occupations.concat(data.states);
-  createAndDisplayOccupationsAndStates(occupationsAndStates);
+    createAndDisplayOptionsInDropdownMenus(data, Object.keys(data));
+  } catch (err) {
+    console.error(err);
+  }
 };
-getOccupationsAndStatesFromAPI();
 
 /**
- * @description - Function that gets "occupations" and "states" from the API and populates
- * both the Occupation and State dropdown menus
+ * @description - Function that populates the dropdown menus with the data from the API
  *
- * @param {Array} occupationsAndStates - The data from the API
- * @returns - The data from the API as option in the dropdowns Occupation and State
+ * @param {Object} objectFromAPI - The data from the API. It is an object.
+ * @param {Array} objectKeys - The keys of the objectFromAPI object
+ * @returns - The data from the API as option in the dropdowns menus
  */
+const createAndDisplayOptionsInDropdownMenus = (objectFromAPI, objectKeys) => {
+  const allDropdownMenus = document.querySelectorAll("select");
 
-const createAndDisplayOccupationsAndStates = (occupationsAndStates) => {
-  const occupationsDropdownMenu = document.querySelector("#occupation");
-  const stateDropdownMenu = document.querySelector("#state");
+  for (let i = 0; i < allDropdownMenus.length; i++) {
+    if (allDropdownMenus[i].classList.contains(objectKeys[i])) {
+      for (let j = 0; j < objectFromAPI[objectKeys[i]].length; j++) {
+        const optionTag = document.createElement("option");
 
-  occupationsAndStates.forEach((occupationOrState) => {
-    const optionTag = document.createElement("option");
-
-    if (typeof occupationOrState === "string") {
-      optionTag.value = occupationOrState;
-      optionTag.textContent = occupationOrState;
-      occupationsDropdownMenu.appendChild(optionTag);
-    } else {
-      optionTag.value = occupationOrState.name;
-      optionTag.textContent = occupationOrState.name;
-      stateDropdownMenu.appendChild(optionTag);
+        let valueOfOptionTag = "";
+        let textOfOptionTag = "";
+        if (typeof objectFromAPI[objectKeys[i]][j] === "string") {
+          valueOfOptionTag = objectFromAPI[objectKeys[i]][j];
+          textOfOptionTag = objectFromAPI[objectKeys[i]][j];
+        } else {
+          valueOfOptionTag = objectFromAPI[objectKeys[i]][j].name;
+          textOfOptionTag = objectFromAPI[objectKeys[i]][j].name;
+        }
+        optionTag.value = valueOfOptionTag;
+        optionTag.textContent = textOfOptionTag;
+        allDropdownMenus[i].appendChild(optionTag);
+      }
     }
-  });
+  }
 };
+getDataFromAPI();
 
 /**
  * @description - Event listener for the "Join!" button
