@@ -58,7 +58,7 @@ const createAndDisplayOptionsInDropdownMenus = (objectFromAPI) => {
 /**
  * @description - Global variables
  *
- * @property {Object} requiredInputs - The inputs in the form
+ * @property {Object} requiredInputs - The inputs in the form. All of them are required
  * @property {Object} formLabels - The labels that are above each input
  * @property {Object} requiredAccents - The accents that are next to each label
  * @property {Object} submitButton - The "Join" button
@@ -76,46 +76,9 @@ const submitBtn = document.querySelector(".submit-btn");
  */
 requiredInputs.forEach((input, index) => {
   input.addEventListener("blur", () => {
-    checkInputs(index);
+    checkAllInputs(index);
   });
 });
-
-/**
- * @description - Function that adds "onclick" event listener to the "Join" button and checks
- * the user's input to see if it is valid
- *
- * @returns - Checks the user's input
- */
-submitBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-
-  submitBtn.classList.add("error-border");
-  requiredInputs.forEach((input, index) => {
-    checkInputs(index);
-  });
-  displayOnSubmitErrorMessages();
-});
-
-const displayOnSubmitErrorMessages = () => {
-  const errorOnsubmitDiv = document.querySelector(".error-onsubmit-div");
-  const errorOnsubmitText = document.querySelector(".error-onsubmit-text");
-
-  // console.log(input.value);
-  // console.log(formLabels[index]);
-
-  //if any of the labels contains the "error-message" class, display the error message
-  for (let i = 0; i < formLabels.length; i++) {
-    if (
-      formLabels[i].classList.contains("error-message") ||
-      requiredInputs[i].value === ""
-    ) {
-      errorOnsubmitDiv.hidden = false;
-      break;
-    } else {
-      errorOnsubmitDiv.hidden = true;
-    }
-  }
-};
 
 /**
  * @description - Function that checks the user's input one by one. If the user's input is
@@ -125,7 +88,7 @@ const displayOnSubmitErrorMessages = () => {
  * @param {Number} index - The index, or indexes, of the input field
  * @returns - True or false depending on the user's inpu
  */
-const checkInputs = (index) => {
+const checkAllInputs = (index) => {
   let inputValue = requiredInputs[index].value.trim();
   let label = formLabels[index];
   let accent = requiredAccents[index];
@@ -237,15 +200,73 @@ const checkOccupationAndState = (inputId, userInput, label, accent) => {
   }
 };
 
-// const isReadyToSubmit = (submitError, errorMessage) => {
-//   const userData = {};
-//   for (let i = 0; i < requiredInputs.length; i++) {
-//     userData[requiredInputs[i].id] = requiredInputs[i].value;
-//   }
-//   sendDataToAPI(userData);
-// };
+/**
+ * @description - Function that adds "onclick" event listener to the "Join" button and checks
+ * the user's input to see if it is valid
+ *
+ * @returns - Checks the user's input
+ */
+submitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  submitBtn.classList.add("error-border");
 
-const sendDataToAPI = async (userData) => {
+  requiredInputs.forEach((input, index) => {
+    checkAllInputs(index);
+  });
+  countEmptyInputs();
+});
+
+/**
+ * @description - Function that counts the number of empty inputs
+ *
+ * @returns - The number of empty inputs
+ */
+const countEmptyInputs = () => {
+  let totalEmptyInputs = 0;
+
+  for (let i = 0; i < requiredInputs.length; i++) {
+    if (
+      requiredInputs[i].value === "" ||
+      formLabels[i].classList.contains("error-message")
+    ) {
+      totalEmptyInputs++;
+    }
+  }
+  displayErrorOrSuccessMessageOnScreen(totalEmptyInputs);
+};
+
+/**
+ * @description - Functions that displays a message on the screen notifying the user whether
+ * their form was submitted successfully or not
+ *
+ * @param {Number} emptyInputs - The number of empty inputs
+ * @returns - A message on the screen
+ */
+const displayErrorOrSuccessMessageOnScreen = (emptyInputs) => {
+  const errorOnsubmitDiv = document.querySelector(".error-onsubmit-div");
+  const errorOnsubmitText = document.querySelector(".error-onsubmit-text");
+  errorOnsubmitDiv.hidden = false;
+
+  if (emptyInputs > 0) {
+    errorOnsubmitText.classList.remove("success-message");
+    errorOnsubmitText.classList.add("error-message");
+    errorOnsubmitText.innerText =
+      "There was a problem with your submission. Please review the fields above.";
+  } else if (emptyInputs === 0) {
+    errorOnsubmitText.classList.remove("error-message");
+    errorOnsubmitText.classList.add("success-message");
+    errorOnsubmitText.innerText = "Thank you for joining!";
+    sendDataToAPI();
+    emptyInputsWhenFormIsSubmitted();
+  }
+};
+
+const sendDataToAPI = async () => {
+  const userData = {};
+  for (let i = 0; i < requiredInputs.length; i++) {
+    userData[requiredInputs[i].id] = requiredInputs[i].value;
+  }
+
   try {
     const res = await fetch(
       "https://frontend-take-home.fetchrewards.com/form",
@@ -258,7 +279,19 @@ const sendDataToAPI = async (userData) => {
       }
     );
     console.log(res);
+    console.log(userData);
   } catch (err) {
     console.error(err);
   }
+};
+
+/**
+ * @description - Helper function that empties the fields when the form is submitted successfully
+ *
+ * @returns - Empty fields
+ */
+const emptyInputsWhenFormIsSubmitted = () => {
+  requiredInputs.forEach((input) => {
+    input.value = "";
+  });
 };
