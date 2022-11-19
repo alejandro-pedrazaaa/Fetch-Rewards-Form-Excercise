@@ -19,39 +19,35 @@ const getDataFromAPI = async () => {
   try {
     const res = await fetch("https://frontend-take-home.fetchrewards.com/form");
     const data = await res.json();
-
-    createAndDisplayOptionsInDropdownMenus(data, Object.keys(data));
+    createAndDisplayOptionsInDropdownMenus(data);
   } catch (err) {
     console.error(err);
   }
 };
 
 /**
- * @description - Function that populates the dropdown menus with the data from the API
+ * @description - Function that takes the data from the API and creates the options for the
+ * dropdown menus
  *
- * @param {Object} objectFromAPI - The data from the API. It is an object.
- * @param {Array} objectKeys - The keys of the objectFromAPI object
- * @returns - The data from the API as option in the dropdowns menus
+ * @param {Object} objectFromAPI - The data from the API
+ * @returns - The options for the dropdown menus
  */
-const createAndDisplayOptionsInDropdownMenus = (objectFromAPI, objectKeys) => {
+const createAndDisplayOptionsInDropdownMenus = (objectFromAPI) => {
   const allDropdownMenus = document.querySelectorAll("select");
+  const objectKeys = Object.keys(objectFromAPI);
 
   for (let i = 0; i < allDropdownMenus.length; i++) {
     if (allDropdownMenus[i].classList.contains(objectKeys[i])) {
       for (let j = 0; j < objectFromAPI[objectKeys[i]].length; j++) {
         const optionTag = document.createElement("option");
 
-        let valueOfOptionTag = "";
-        let textOfOptionTag = "";
         if (typeof objectFromAPI[objectKeys[i]][j] === "string") {
-          valueOfOptionTag = objectFromAPI[objectKeys[i]][j];
-          textOfOptionTag = objectFromAPI[objectKeys[i]][j];
+          optionTag.value = objectFromAPI[objectKeys[i]][j];
+          optionTag.textContent = objectFromAPI[objectKeys[i]][j];
         } else {
-          valueOfOptionTag = objectFromAPI[objectKeys[i]][j].name;
-          textOfOptionTag = objectFromAPI[objectKeys[i]][j].name;
+          optionTag.value = objectFromAPI[objectKeys[i]][j].name;
+          optionTag.textContent = objectFromAPI[objectKeys[i]][j].name;
         }
-        optionTag.value = valueOfOptionTag;
-        optionTag.textContent = textOfOptionTag;
         allDropdownMenus[i].appendChild(optionTag);
       }
     }
@@ -60,175 +56,177 @@ const createAndDisplayOptionsInDropdownMenus = (objectFromAPI, objectKeys) => {
 getDataFromAPI();
 
 /**
- * @description - Event listener for the "Join!" button
- */
-const joinButton = document.querySelector(".submit");
-joinButton.addEventListener("click", (e) => {
-  e.preventDefault();
-  getAndSendUserInput();
-});
-
-/**
- * @description - Function that is called when the "Join!" button is clicked. The function
- * gets the user input, saves it in an object and, if the input is valid, it sends the
- * data to the API
- */
-const getAndSendUserInput = () => {
-  const requiredInputs = document.querySelectorAll(".required-input");
-
-  const data = {};
-  for (let i = 0; i < requiredInputs.length; i++) {
-    data[requiredInputs[i].id] = requiredInputs[i].value;
-  }
-
-  if (checkIfDataIsValid(requiredInputs)) {
-    sendDataToAPI(data);
-  }
-};
-
-/**
- * @description - Function that checks if the user input is valid
+ * @description - Function that checks the inputs on blur
  *
- * @param {Array} userInput - The user input
- * @returns {Boolean} - True if the input is valid, false otherwise
+ * @param {Object} input - The input element
+ * @param {Object} label - The label element
+ * @param {Object} accent - The span element
+ * @returns - The checks for all the inputs
  */
-const checkIfDataIsValid = (requiredInputs) => {
-  const errorMessages = document.querySelectorAll(".error-message");
-  let isValid = true;
+const checkInputsOnBlur = (input, label, accent) => {
+  input.addEventListener("blur", () => {
+    let inputValue = input.value.trim();
 
-  for (let i = 0; i < requiredInputs.length; i++) {
-    let inputId = requiredInputs[i].id;
-
-    switch (inputId) {
+    switch (input.id) {
       case "name":
-        if (requiredInputs[i].value.length < 5) {
-          requiredInputs[i].classList.add("error-border");
-          errorMessages[i].hidden = false;
-          isValid = false;
-        } else {
-          requiredInputs[i].classList.remove("error-border");
-          errorMessages[i].hidden = true;
-        }
+        checkFullName(inputValue, label, accent);
         break;
       case "email":
-        if (!validateEmail(requiredInputs[i].value)) {
-          requiredInputs[i].classList.add("error-border");
-          errorMessages[i].hidden = false;
-          isValid = false;
-        } else {
-          requiredInputs[i].classList.remove("error-border");
-          errorMessages[i].hidden = true;
-        }
+        checkEmail(inputValue, label, accent);
         break;
       case "password":
-        if (requiredInputs[i].value.length < 8) {
-          requiredInputs[i].classList.add("error-border");
-          errorMessages[i].hidden = false;
-          isValid = false;
-        } else if (!validatePassword(requiredInputs[i].value)) {
-          requiredInputs[i].classList.add("error-border");
-          errorMessages[i].hidden = false;
-          errorMessages[i].textContent =
-            "Your password must have at least eight characters, one number, one special character, and at least one uppercase letter";
-          isValid = false;
-        } else {
-          requiredInputs[i].classList.remove("error-border");
-          errorMessages[i].hidden = true;
-        }
+        checkPassword(inputValue, label, accent);
         break;
       case "occupation":
-        if (requiredInputs[i].value === "") {
-          requiredInputs[i].classList.add("error-border");
-          errorMessages[i].hidden = false;
-          isValid = false;
-        } else if (requiredInputs[i].value !== "") {
-          requiredInputs[i].classList.remove("error-border");
-          errorMessages[i].hidden = true;
-        }
-        break;
       case "state":
-        if (requiredInputs[i].value === "") {
-          requiredInputs[i].classList.add("error-border");
-          errorMessages[i].hidden = false;
-          isValid = false;
-        } else if (requiredInputs[i].value !== "") {
-          requiredInputs[i].classList.remove("error-border");
-          errorMessages[i].hidden = true;
-        }
+        checkOccupationAndState(input.id, inputValue, label, accent);
         break;
       default:
         break;
     }
-  }
-  displayPopupScreen(isValid, requiredInputs);
-  return isValid;
+  });
 };
 
 /**
- * @description - Helper function to validate the email
+ * @description - Helper function that checks the full name
  *
- * @param {String} email - The email to validate
- * @returns {Boolean} - True if the email is valid, false otherwise
+ * @param {String} userInput - The user's input
+ * @param {Object} label - The label element
+ * @param {Object} accent - The span element
+ * @returns - True or false depending on the user's input
  */
-const validateEmail = (email) => {
+const checkFullName = (userInput, label, accent) => {
+  console.log(label);
+  if (userInput.length < 5) {
+    label.classList.add("error-message");
+    accent.innerText = " - Please enter your full name";
+  } else {
+    label.classList.remove("error-message");
+    accent.innerText = "*";
+  }
+};
+
+/**
+ * @description - Helper function that checks the email
+ *
+ * @param {String} userInput - The user's input
+ * @param {Object} label - The label element
+ * @param {Object} accent - The span element
+ * @returns - True or false depending on the user's input
+ */
+const checkEmail = (userInput, label, accent) => {
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-};
+  const emailIsValid = re.test(String(userInput).toLowerCase());
 
-/**
- * @description - Helper function to validate the password
- *
- * @param {String} password - The password to validate
- * @returns {Boolean} - True if the password is valid, false otherwise
- */
-const validatePassword = (password) => {
-  const re = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-  return re.test(String(password));
-};
-
-/**
- * @description - Function that displays a success or error popup window depending on the
- * validity of all the inputs
- *
- * @param {Boolean} valid - True if the input is valid, false otherwise
- * @param {Array} inputs - The inputs to clear if the information is valid
- * @returns {Boolean} - True if the inputs were valid, false otherwise
- */
-const displayPopupScreen = (valid, inputs) => {
-  const popupScreen = document.querySelector(".modal-body");
-
-  if (!valid) {
-    popupScreen.innerText = "Please, make sure all of the fields are valid.";
+  if (!emailIsValid) {
+    label.classList.add("error-message");
+    accent.innerText = " - Please enter a valid email address";
   } else {
-    popupScreen.innerText = "Your profile has been created!";
-    for (let i = 0; i < inputs.length; i++) {
-      inputs[i].value = "";
-    }
+    label.classList.remove("error-message");
+    accent.innerText = "*";
   }
 };
 
 /**
- * @description - Async function that sends the data to the API
+ * @description - Helper function that checks the password
  *
- * @param {Object} data - The user input
- * @returns - Console logs the response from the API
+ * @param {String} userInput - The user's input
+ * @param {Object} label - The label element
+ * @param {Object} accent - The span element
+ * @returns - True or false depending on the user's input
  */
-const sendDataToAPI = async (data) => {
-  const res = await fetch("https://frontend-take-home.fetchrewards.com/form", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-  //See what was sent to the API
-  console.log(await res.json());
-  //To make sure the status code is the same as the one given in the instructions (201)
-  console.log(data);
-  if (res.status === 201) {
-    console.log("Success");
+const checkPassword = (userInput, label, accent) => {
+  const re = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+  const passwordIsValid = re.test(String(userInput));
+
+  if (userInput.length < 8) {
+    label.classList.add("error-message");
+    accent.innerText = " - Password must be at least 8 characters";
+  } else if (!passwordIsValid) {
+    label.classList.add("error-message");
+    accent.innerText =
+      " - Your password must contain at least one uppercase letter, one lowercase letter, one number, and one special character";
   } else {
-    console.log("Error");
+    label.classList.remove("error-message");
+    accent.innerText = "*";
+  }
+};
+
+/**
+ * @description - Helper function that checks the occupation and state
+ *
+ * @param {String} userInput - The user's input
+ * @param {Object} label - The label element
+ * @param {Object} accent - The span element
+ * @returns - True or false depending on whether the user has selected an option
+ */
+const checkOccupationAndState = (inputId, userInput, label, accent) => {
+  if (userInput === "") {
+    label.classList.add("error-message");
+    if (inputId === "occupation") {
+      accent.innerText = " - Please select your occupation";
+    } else {
+      accent.innerText = " - Please select your state";
+    }
+  } else {
+    label.classList.remove("error-message");
+    accent.innerText = "*";
+  }
+};
+
+/**
+ * @description - Function that creates span elements, with `*` as the text content, and
+ * appends them to the labels
+ *
+ * @returns - The span elements for the label elements
+ */
+const requiredInputs = document.querySelectorAll(".required-input");
+const formLabels = document.querySelectorAll(".form-label");
+const createAndAppendRequiredAccent = () => {
+  for (let i = 0; i < formLabels.length; i++) {
+    const requiredAccent = document.createElement("span");
+    requiredAccent.innerHTML = `<span class="required-accent" title="Required">*</span>`;
+    formLabels[i].appendChild(requiredAccent);
+
+    const requiredAccents = document.querySelectorAll(".required-accent");
+    checkInputsOnBlur(requiredInputs[i], formLabels[i], requiredAccents[i]);
+  }
+};
+createAndAppendRequiredAccent();
+
+const submitBtn = document.querySelector(".submit-btn");
+submitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  submitBtn.classList.add("error-border");
+
+  // checkAllInputsOnSubmit();
+});
+
+// checkAllInputsOnSubmit = () => {};
+
+// const isReadyToSubmit = (submitError, errorMessage) => {
+//   const userData = {};
+//   for (let i = 0; i < requiredInputs.length; i++) {
+//     userData[requiredInputs[i].id] = requiredInputs[i].value;
+//   }
+//   sendDataToAPI(userData);
+// };
+
+const sendDataToAPI = async (userData) => {
+  try {
+    const res = await fetch(
+      "https://frontend-take-home.fetchrewards.com/form",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      }
+    );
+    console.log(res);
+  } catch (err) {
+    console.error(err);
   }
 };

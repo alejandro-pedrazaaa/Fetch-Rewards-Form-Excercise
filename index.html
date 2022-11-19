@@ -99,9 +99,12 @@
             <div class="col text-center">
               <h2 class="title">Tap into the power of Fetch</h2>
               <p class="paragraph py-3 fs-5">
-                With more daily active users than Starbucks & DoorDash, Fetch
+                With <b>daily active users than Starbucks & DoorDash*</b>, Fetch
                 can help you do big things. Join today!
               </p>
+              <div class="col-12">
+                <p class="paragraph source">*Source: data.ai</p>
+              </div>
             </div>
             <div class="col d-none d-lg-block">
               <img
@@ -116,53 +119,38 @@
         <div class="col col-lg-6 offset-lg-1 align-self-center">
           <form action="" id="form">
             <div class="mb-3">
-              <label for="name" class="form-label fs-5"
-                >Full Name <span class="required-accent">*</span></label
-              >
+              <label for="name" class="form-label fs-6">Full Name </label>
               <input
                 type="text"
-                class="form-control required-input"
+                class="form-control required-input fs-6"
                 id="name"
                 aria-describedby="name"
               />
-              <span class="fs-6 error-message" hidden
-                >Please, enter a valid name</span
-              >
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label fs-5"
-                >Email <span class="required-accent">*</span></label
-              >
+              <label for="email" class="form-label fs-6">Email </label>
               <input
                 type="email"
                 class="form-control required-input"
                 id="email"
                 aria-describedby="email"
               />
-              <span class="fs-6 error-message" hidden
-                >Please, enter a valid email address</span
-              >
             </div>
             <div class="mb-3">
-              <label for="password" class="form-label fs-5"
-                >Password <span class="required-accent">*</span></label
-              >
+              <label for="password" class="form-label fs-6">Password </label>
               <input
                 type="password"
                 class="form-control required-input"
                 id="password"
                 aria-describedby="password"
               />
-              <span class="fs-6 error-message" hidden
-                >Your password must be at least eight characters long</span
-              >
             </div>
             <div class="mb-3">
-              <label for="occupation" class="form-label fs-5"
-                >Occupation <span class="required-accent">*</span></label
-              >
+              <label for="occupation" class="form-label fs-6"
+                >Occupation
+              </label>
               <select
-                class="form-select required-input occupations"
+                class="form-select required-input occupations fs-6"
                 id="occupation"
                 aria-label="occupation"
               >
@@ -170,16 +158,11 @@
                   Please select your occupation
                 </option>
               </select>
-              <span class="fs-6 error-message" hidden
-                >Please, enter a valid occupation</span
-              >
             </div>
             <div class="mb-3">
-              <label for="occupation" class="form-label fs-5"
-                >State <span class="required-accent">*</span></label
-              >
+              <label for="occupation" class="form-label fs-6">State </label>
               <select
-                class="form-select required-input states"
+                class="form-select required-input states fs-6"
                 id="state"
                 aria-label="state"
               >
@@ -187,51 +170,31 @@
                   Please select your state
                 </option>
               </select>
-              <span class="fs-6 error-message" hidden
-                >Please, enter a valid state</span
-              >
             </div>
-            <div
-              class="mb-3 py-3 pe-2 pb-lg-0 d-flex justify-content-end col-12"
-            >
-              <button
-                type="submit"
-                class="btn btn-primary submit rounded-1 fs-5"
-                type="button"
-                class="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
+            <div>
+              <div
+                class="mb-3 py-3 pe-2 pb-lg-0 d-flex justify-content-end col-12 pb-0"
               >
-                Join!
-              </button>
+                <button
+                  type="submit"
+                  class="btn btn-primary submit-btn rounded-1 fs-6 py-3 px-4"
+                  type="button"
+                >
+                  Join <i class="fa-solid fa-arrow-right-long"></i>
+                </button>
+              </div>
+              <div class="col-12 text-center pb-5 fs-5 error-on-submit" hidden>
+                <span class="error-message"
+                  >There was a problem with your submission. Please review the
+                  fields above.
+                </span>
+              </div>
             </div>
           </form>
         </div>
       </div>
     </section>
     <!-- ==================== End Form Container ===================== -->
-    <!-- Modal/Popup -->
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header border border-0 pb-0">
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body fs-5 text-center align-items-start"></div>
-        </div>
-      </div>
-    </div>
     <!-- ==================== Footer ===================== -->
     <footer class="container-fluid">
       <div class="row pt-5 pb-3">
@@ -239,7 +202,7 @@
           <!-- Explore List -->
           <div class="d-flex flex-column text-center company-resources-lists">
             <h2 class="fs-2">Explore</h2>
-            <ul class="list-unstyled fs-5">
+            <ul class="list-unstyled fs-6">
               <li class="pt-3">
                 <a
                   href="https://www.fetchrewards.com/brands"
@@ -279,7 +242,7 @@
             class="d-flex flex-column text-center company-resources-lists pt-4 pt-sm-0"
           >
             <h2 class="fs-2">Resources</h2>
-            <ul class="list-unstyled fs-5">
+            <ul class="list-unstyled fs-6">
               <li class="pt-3">
                 <a
                   href="https://help.fetch.com/hc/en-us"
@@ -322,7 +285,7 @@
             alt="Fetch Rewards Logo"
             class="img-fluid logo py-3"
           />
-          <h2 class="follow-us">FOLLOW US</h2>
+          <h2 class="follow-us fs-2">FOLLOW US</h2>
           <div class="justify-content-center d-flex">
             <ul
               class="list-group list-unstyled list-group-horizontal fs-2 gap-5"
@@ -356,7 +319,7 @@
             </ul>
           </div>
           <div>
-            <p class="copyright fs-5">
+            <p class="copyright fs-6">
               ©2022 Fetch Rewards, All rights reserved.
             </p>
           </div>

@@ -36,22 +36,32 @@ label {
 .title {
   font-size: 55px;
 }
+b {
+  color: #fff !important;
+  font-weight: 900;
+}
+.source {
+  font-size: 14px;
+}
 .required-accent {
   color: #f25650 !important;
 }
-.submit {
+.submit-btn {
   background-color: #f25650 !important;
   border: none;
   color: rgb(39 28 71) !important;
 }
-.submit:hover {
-  background-color: #ffa900 !important;
-}
 .error-message {
   color: #f25650 !important;
 }
-.error-border {
-  border: 3px solid #f25650 !important;
+.success-message {
+  color: #fff !important;
+}
+.submit:hover {
+  background-color: #ffa900 !important;
+}
+.error-border:focus {
+  box-shadow: inset 0px 0px 0px 4px #ffa900;
 }
 /**************************** Footer ****************************/
 footer {
@@ -86,5 +96,8 @@ footer {
   }
   .navbar-nav {
     height: 100vh;
+  }
+  .nav-link:hover {
+    color: #ffa900 !important;
   }
 }
