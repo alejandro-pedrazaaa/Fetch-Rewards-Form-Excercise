@@ -24,6 +24,7 @@ const getDataFromAPI = async () => {
     console.error(err);
   }
 };
+getDataFromAPI();
 
 /**
  * @description - Function that takes the data from the API and creates the options for the
@@ -53,38 +54,100 @@ const createAndDisplayOptionsInDropdownMenus = (objectFromAPI) => {
     }
   }
 };
-getDataFromAPI();
 
 /**
- * @description - Function that checks the inputs on blur
+ * @description - Global variables
  *
- * @param {Object} input - The input element
- * @param {Object} label - The label element
- * @param {Object} accent - The span element
- * @returns - The checks for all the inputs
+ * @property {Object} requiredInputs - The inputs in the form
+ * @property {Object} formLabels - The labels that are above each input
+ * @property {Object} requiredAccents - The accents that are next to each label
+ * @property {Object} submitButton - The "Join" button
  */
-const checkInputsOnBlur = (input, label, accent) => {
-  input.addEventListener("blur", () => {
-    let inputValue = input.value.trim();
+const requiredInputs = document.querySelectorAll(".required-input");
+const formLabels = document.querySelectorAll(".form-label");
+const requiredAccents = document.querySelectorAll(".required-accent");
+const submitBtn = document.querySelector(".submit-btn");
 
-    switch (input.id) {
-      case "name":
-        checkFullName(inputValue, label, accent);
-        break;
-      case "email":
-        checkEmail(inputValue, label, accent);
-        break;
-      case "password":
-        checkPassword(inputValue, label, accent);
-        break;
-      case "occupation":
-      case "state":
-        checkOccupationAndState(input.id, inputValue, label, accent);
-        break;
-      default:
-        break;
-    }
+/**
+ * @description - Function that adds "onblur" event listener to each input field and checks
+ * the user's input to see if it is valid
+ *
+ * @returns - Checks the user's input
+ */
+requiredInputs.forEach((input, index) => {
+  input.addEventListener("blur", () => {
+    checkInputs(index);
   });
+});
+
+/**
+ * @description - Function that adds "onclick" event listener to the "Join" button and checks
+ * the user's input to see if it is valid
+ *
+ * @returns - Checks the user's input
+ */
+submitBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  submitBtn.classList.add("error-border");
+  requiredInputs.forEach((input, index) => {
+    checkInputs(index);
+  });
+  displayOnSubmitErrorMessages();
+});
+
+const displayOnSubmitErrorMessages = () => {
+  const errorOnsubmitDiv = document.querySelector(".error-onsubmit-div");
+  const errorOnsubmitText = document.querySelector(".error-onsubmit-text");
+
+  // console.log(input.value);
+  // console.log(formLabels[index]);
+
+  //if any of the labels contains the "error-message" class, display the error message
+  for (let i = 0; i < formLabels.length; i++) {
+    if (
+      formLabels[i].classList.contains("error-message") ||
+      requiredInputs[i].value === ""
+    ) {
+      errorOnsubmitDiv.hidden = false;
+      break;
+    } else {
+      errorOnsubmitDiv.hidden = true;
+    }
+  }
+};
+
+/**
+ * @description - Function that checks the user's input one by one. If the user's input is
+ * invalid, the function adds the "error-message" class to the label and changes the
+ * innerText of the "accent" span element
+ *
+ * @param {Number} index - The index, or indexes, of the input field
+ * @returns - True or false depending on the user's inpu
+ */
+const checkInputs = (index) => {
+  let inputValue = requiredInputs[index].value.trim();
+  let label = formLabels[index];
+  let accent = requiredAccents[index];
+  let inputId = requiredInputs[index].id;
+
+  switch (requiredInputs[index].id) {
+    case "name":
+      checkFullName(inputValue, label, accent);
+      break;
+    case "email":
+      checkEmail(inputValue, label, accent);
+      break;
+    case "password":
+      checkPassword(inputValue, label, accent);
+      break;
+    case "occupation":
+    case "state":
+      checkOccupationAndState(inputId, inputValue, label, accent);
+      break;
+    default:
+      break;
+  }
 };
 
 /**
@@ -96,7 +159,6 @@ const checkInputsOnBlur = (input, label, accent) => {
  * @returns - True or false depending on the user's input
  */
 const checkFullName = (userInput, label, accent) => {
-  console.log(label);
   if (userInput.length < 5) {
     label.classList.add("error-message");
     accent.innerText = " - Please enter your full name";
@@ -174,36 +236,6 @@ const checkOccupationAndState = (inputId, userInput, label, accent) => {
     accent.innerText = "*";
   }
 };
-
-/**
- * @description - Function that creates span elements, with `*` as the text content, and
- * appends them to the labels
- *
- * @returns - The span elements for the label elements
- */
-const requiredInputs = document.querySelectorAll(".required-input");
-const formLabels = document.querySelectorAll(".form-label");
-const createAndAppendRequiredAccent = () => {
-  for (let i = 0; i < formLabels.length; i++) {
-    const requiredAccent = document.createElement("span");
-    requiredAccent.innerHTML = `<span class="required-accent" title="Required">*</span>`;
-    formLabels[i].appendChild(requiredAccent);
-
-    const requiredAccents = document.querySelectorAll(".required-accent");
-    checkInputsOnBlur(requiredInputs[i], formLabels[i], requiredAccents[i]);
-  }
-};
-createAndAppendRequiredAccent();
-
-const submitBtn = document.querySelector(".submit-btn");
-submitBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  submitBtn.classList.add("error-border");
-
-  // checkAllInputsOnSubmit();
-});
-
-// checkAllInputsOnSubmit = () => {};
 
 // const isReadyToSubmit = (submitError, errorMessage) => {
 //   const userData = {};
