@@ -1,4 +1,4 @@
-# Fetch Rewards User Creation Form
+# User Creation Form
 
 [Click here](https://alejandropedrazaaa.com/UserCreationForm-Website/) to visit and interact with this webpage.
 
