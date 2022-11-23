@@ -21,7 +21,7 @@ This webpage contains a user creation form and the aesthetics are inspired by [F
 
 ## Dependencies
 
-Make sure you have the latest git version and the latest Visual Studio Code
+Make sure you have the latest git version and the latest Visual Studio Code update
 
 ## Contributing
 
