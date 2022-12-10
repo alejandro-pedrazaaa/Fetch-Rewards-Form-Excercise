@@ -1,4 +1,4 @@
-# User Creation Form - Website
+# User Creation Form
 
 [Click here](https://alejandro-pedrazaaa.github.io/User-Creation-Form/) to visit and interact with this website.
 
