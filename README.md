@@ -1,6 +1,6 @@
 # User Creation Form
 
-[Click here](https://alejandro-pedrazaaa.github.io/User-Creation-Form-Website/) to visit and interact with this website.
+[Click here](https://alejandro-pedrazaaa.github.io/UserCreationForm-Website/) to visit and interact with this website.
 
 ## What is this website?
 
