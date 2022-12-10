@@ -10,11 +10,11 @@ Inspired by [Fetch Rewards](https://www.fetchrewards.com/), this website has a f
 
 1. Open your terminal and then type: 
   ```sh
-   $ git clone https:/github.com/alejandro-pedrazaaa/UserCreationForm-Website.git
+   $ git clone https:/github.com/alejandro-pedrazaaa/User-Creation-Form.git
    ```
 2. cd into the new folder 
   ```sh
-   $ cd UserCreationForm-Website
+   $ cd User-Creation-Form
    ```
 3. Start working on your own version of this website
 
@@ -41,7 +41,7 @@ Don't forget to give the project a star! Thanks again!
 Inspiration, code snippets, etc:
    * [Fetch Rewards Main Page](https://www.fetchrewards.com/)
    * [Fetch Rewards Page With a Form](https://partners.fetchrewards.com/)
-   * [Bootstrap Templates](https://getbootstrap.com/)
+   * [Bootstrap](https://getbootstrap.com/)
 
 ## Contact Me
 
