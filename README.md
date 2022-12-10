@@ -4,7 +4,7 @@
 
 ## What is this website?
 
-This website contains a user creation form and the aesthetics are inspired by [Fetch Rewards](https://www.fetchrewards.com/). The form checks if the user information that the user provided is correct. If the information is not, the user is prompted to check what fields are incorrect and fix them. Once all of the fields have valid information, the user is notified and the information is "sent" as an object to the API. The website is also responsive.
+Inspired by [Fetch Rewards](https://www.fetchrewards.com/), this website has a form that is used to create profiles for users. The form checks if the user information that the user provided is correct. If the information is not, the user is prompted to check what fields are incorrect and fix them. Once all of the fields have valid information, the user is notified and the information is "sent" as an object to the API. The website is also responsive.
 
 ## Getting Started
 
